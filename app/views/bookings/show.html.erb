@@ -1,0 +1,12 @@
+<h2>Booking Completed!</h2>
+<p>
+    You're flying <%= @booking.flight.name %> on <%= @booking.flight.depart_date %> to <%= @booking.flight.destination.name %><br>
+    Passengers booked:
+    <ol>
+    <% @booking.passengers.each do |passenger| %>
+        <li><%= passenger.name %></li>
+    <% end %>
+    </ol>
+</p>
+
+<%= link_to 'Home', :root %>

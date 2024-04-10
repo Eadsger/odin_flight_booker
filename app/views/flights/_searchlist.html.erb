@@ -1,0 +1,14 @@
+<p>
+<% if @results.empty? %>
+    Sorry, no matching flights found.
+<% else %>
+    We found <%= @results.length %> matching <%= @results.length > 1 ? 'flights' : 'flight' %> departing on <%= params[:departure_date] %>.
+    <%= form_with url:'/bookings/new', method: :get do |form| %>
+        <%= form.label :flight, 'Departures Available' %>
+        <%= form.collection_select :flight_id, @results, :id, :display_depart_time_only, { include_blank: 'Select a Flight' }, required: true %>
+        <%= form.hidden_field :num_tickets, value: params[:passengers] %>
+
+        <%= form.submit "Book this flight!" %>
+    <% end %>
+<% end %>
+</p>

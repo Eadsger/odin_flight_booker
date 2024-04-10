@@ -1,0 +1,27 @@
+<p><%= [@flight.name, @flight.origin.name, @flight.destination.name, @flight.depart_date] %></p>
+
+<%= form_with model: @booking, method: :post do |form| %>
+    <% if @booking.errors.any? %>
+        <div id="error_explanation">
+        <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+        <ul>
+            <% @booking.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+            <% end %>
+        </ul>
+        </div>
+    <% end %>
+
+    <%= form.hidden_field :flight_id, value: @flight.id %>
+        <%= form.fields_for :passengers do |subform| %>
+            <fieldset>
+                <legend>Passenger #<%= subform.index + 1 %></legend>
+                <%= subform.label :name %>
+                <%= subform.text_field :name %>
+                <%= subform.label :email %>
+                <%= subform.email_field :email %>
+            </fieldset>
+        <% end %>
+    <%= form.submit %>
+<% end %>

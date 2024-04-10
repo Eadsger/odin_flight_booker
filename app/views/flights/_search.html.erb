@@ -1,0 +1,12 @@
+<%= form_with url:'/flights', method: :get do |form| %>
+    <%= form.label :origin %>
+    <%= form.collection_select :origin, @airports, :code, :name, { include_blank: 'Select Airport', selected: params[:origin] }, required: true %>
+    <%= form.label :destination %>
+    <%= form.collection_select :destination, @airports, :code, :name, { include_blank: 'Select Airport', selected: params[:destination] }, required: true %>
+    <%= form.label :passengers %>
+    <%= form.select :passengers, (1..4).to_a, { selected: params[:passengers] } %>
+    <%= form.label :departure_date %>
+    <%= form.select :departure_date, @depart_dates.map { |time| [time.strftime('%F'), time] }, { selected: params[:departure_date] } %>
+
+    <%= form.submit "Search" %>
+<% end %>
