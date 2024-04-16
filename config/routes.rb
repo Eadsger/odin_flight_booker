@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'flights#index'
   get '/airports', to: redirect('/flights')
   resources :flights, only: [:index]
-  resources :bookings, only: [:show, :create, :new]
+  resources :bookings, only: [:show, :create, :new, :index]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

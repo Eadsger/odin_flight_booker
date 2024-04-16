@@ -26,9 +26,11 @@ class BookingsController < ApplicationController
   def create
     @flight = Flight.find(booking_params[:flight_id])
     @booking = @flight.bookings.new(booking_params)
+    @passenger = Passenger.new(passenger_params)
 
     respond_to do |format|
       if @booking.save
+        PassengerMailer.confirmation_email(@passenger).deliver_now
         format.html { redirect_to booking_url(@booking), notice: "Booking was successfully created." }
         format.json { render :show, status: :created, location: @booking }
       else
@@ -70,5 +72,9 @@ class BookingsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def booking_params
       params.require(:booking).permit(:flight_id, :num_tickets, passengers_attributes: [:name, :email])
+    end
+
+    def passenger_params
+      params.require(:booking).require(:passengers_attributes).permit(:name, :email)
     end
 end
